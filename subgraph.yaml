@@ -1,0 +1,39 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: PipeleSBT
+    network: goerli
+    source:
+      address: "0xCfb817ACDFc3F63ecc1e7746faE6697fCd6862d9"
+      abi: PipeleSBT
+      startBlock: 7275939
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - ApprovalForAll
+        - Attest
+        - Revoke
+        - TransferBatch
+        - TransferSingle
+        - URI
+      abis:
+        - name: PipeleSBT
+          file: ./abis/PipeleSBT.json
+      eventHandlers:
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: Attest(address,uint256,uint256,string)
+          handler: handleAttest
+        - event: Revoke(address,uint256)
+          handler: handleRevoke
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+          handler: handleTransferBatch
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleTransferSingle
+        - event: URI(string,indexed uint256)
+          handler: handleURI
+      file: ./src/pipele-sbt.ts

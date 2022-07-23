@@ -1,0 +1,12 @@
+type PipeleEntity @entity {
+  id: String!
+  owner: String!
+  fileID: String!
+}
+
+type PipeleShare @entity {
+  id: String!
+  from: String!
+  to: String!
+  pipeleSBT: PipeleEntity!
+}
