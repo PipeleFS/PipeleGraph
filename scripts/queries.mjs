@@ -7,8 +7,9 @@ let URL = "https://api.thegraph.com/subgraphs/name/darahask/pipe";
 
 export const getFriends = (addr) => `{
   pipeleShares(
-    where: {from_contains_nocase: "${addr}"}
+    where: {from_contains_nocase: "${addr}", to_not_contains_nocase: "${addr}"}
   ) {
+    id
     to
   }
   }`;
