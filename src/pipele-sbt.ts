@@ -11,10 +11,10 @@ import {
 import { PipeleEntity, PipeleShare } from "../generated/schema"
 
 function handleShare(from: string, to: string, id: string): void {
-  let share = PipeleShare.load(`${from}-${to}`);
+  let share = PipeleShare.load(`${from}-${to}-${id}`);
 
   if (share === null) {
-    share = new PipeleShare(`${from}-${to}`);
+    share = new PipeleShare(`${from}-${to}-${id}`);
   }
 
   share.from = from;
@@ -54,7 +54,7 @@ export function handleRevoke(event: Revoke): void {
   if (event.params.to.toHexString() == entity.owner) {
     store.remove("PipeleEntity", entity.id);
   } else {
-    store.remove("PipeleShare", `${entity.owner}-${event.params.to.toHexString()}`);
+    store.remove("PipeleShare", `${entity.owner}-${event.params.to.toHexString()}-${event.params.tokenId.toString()}`);
   }
 }
 
