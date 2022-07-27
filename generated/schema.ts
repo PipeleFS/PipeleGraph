@@ -61,6 +61,47 @@ export class PipeleEntity extends Entity {
   }
 }
 
+export class PipeleUser extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PipeleUser entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type PipeleUser must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("PipeleUser", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PipeleUser | null {
+    return changetype<PipeleUser | null>(store.get("PipeleUser", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get friends(): Array<string> {
+    let value = this.get("friends");
+    return value!.toStringArray();
+  }
+
+  set friends(value: Array<string>) {
+    this.set("friends", Value.fromStringArray(value));
+  }
+}
+
 export class PipeleShare extends Entity {
   constructor(id: string) {
     super();

@@ -1,7 +1,12 @@
 type PipeleEntity @entity {
   id: String!
-  owner: String!
+  owner: PipeleUser!
   fileID: String!
+}
+
+type PipeleUser @entity {
+  id: String!
+  friends: [PipeleUser!]!
 }
 
 type PipeleShare @entity {
